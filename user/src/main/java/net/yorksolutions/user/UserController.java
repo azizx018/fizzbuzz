@@ -17,7 +17,8 @@ import java.util.UUID;
 @RequestMapping("/")
 public class UserController {
     private final UserAccountRepository repository;
-    private final HashMap<UUID, Long> tokenMap;
+
+    private HashMap<UUID, Long> tokenMap;
 
     // This is for Spring
     @Autowired
@@ -62,5 +63,15 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.CONFLICT);
 
         repository.save(new UserAccount());
+    }
+    @GetMapping("/isAuthorized")
+    public void isAuthorized(@RequestParam UUID token) {
+        if (tokenMap.containsKey(token))
+            return;
+
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+    }
+    public void setTokenMap(HashMap<UUID, Long> tokenMap) {
+        this.tokenMap = tokenMap;
     }
 }

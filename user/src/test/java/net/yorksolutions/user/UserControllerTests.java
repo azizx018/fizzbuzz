@@ -5,7 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.UUID;
@@ -95,6 +98,22 @@ public class UserControllerTests {
         when(repository.save(captor.capture())).thenReturn(new UserAccount());
         Assertions.assertDoesNotThrow(() -> controller.register(username, password));
         assertEquals(new UserAccount(), captor.getValue());
+    }
+
+    @Test
+    void itShouldNotThrowWhenTokenIsCorrect() {
+        final var token = UUID.randomUUID();
+        when(tokenMap.containsKey(token)).thenReturn(true);
+        assertDoesNotThrow(() -> controller.isAuthorized(token));
+
+    }
+
+    @Test
+    void itShouldThrowUnauthWhenTokenIsBad() {
+        final UUID token = UUID.randomUUID();
+        when(tokenMap.containsKey(token)).thenReturn(false);
+        final ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> controller.isAuthorized(token));
+        assertEquals(HttpStatus.UNAUTHORIZED, exception.getStatus());
     }
 
 }

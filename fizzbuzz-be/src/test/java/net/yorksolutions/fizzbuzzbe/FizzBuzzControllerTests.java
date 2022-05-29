@@ -59,14 +59,6 @@ public class FizzBuzzControllerTests {
     void itShouldThrowUnauthWhenOtherStatusIsUnauth() {
         final UUID token = UUID.randomUUID();
         String url = "http://localhost:8081/isAuthorized?token=" + token;
-
-//        {
-//            RestTemplate rest;
-//            rest = new RestTemplate();
-//            ResponseEntity<Void> response = rest.getForEntity(url, Void.class, (Object) null);
-//            response.getStatusCode(); // do something with that status code
-//        }
-
         when(rest.getForEntity(url, Void.class))
                 .thenReturn(new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED));
         final ResponseStatusException exception = assertThrows(ResponseStatusException.class,
