@@ -113,4 +113,29 @@ class UserApplicationTests {
 
     }
 
+    @Test
+    void itShouldReturnConflictWhenUsernameTaken() {
+        final TestRestTemplate rest = new TestRestTemplate();
+        final String username = "some username";
+        final String password = "some password";
+        String url = "http://localhost:" + port + "/register?username=" + username + "&password=" + password;
+        when(repository.findByUsername(username))
+                .thenReturn(Optional.of(new UserAccount()));
+        final ResponseEntity<Void> response = rest.getForEntity(url, Void.class);
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+
+    }
+    @Test
+    void itShouldReturnOKWhenUsernameNotTaken() {
+        final TestRestTemplate rest = new TestRestTemplate();
+        final String username = "some username";
+        final String password = "some password";
+        String url = "http://localhost:" + port + "/register?username=" + username + "&password=" + password;
+        when(repository.findByUsername(username))
+                .thenReturn(Optional.empty());
+        final ResponseEntity<Void> response = rest.getForEntity(url, Void.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+    }
+
 }
