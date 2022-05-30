@@ -47,12 +47,6 @@ public class FizzBuzzService {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    String echo(String input) {
-        return input;
-    }
-
-
     String fizzbuzz(UUID token, Integer input) {
         checkAuthorized(token);
         return FizzBuzz.play(input);

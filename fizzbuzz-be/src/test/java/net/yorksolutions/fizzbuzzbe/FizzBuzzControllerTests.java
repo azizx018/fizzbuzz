@@ -90,18 +90,5 @@ public class FizzBuzzControllerTests {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(output, response.getBody());
     }
-//
-//    @Test
-//    void itShouldCallPlay() {
-//        final String expected = "some string";
-//        final var token = UUID.randomUUID();
-////        final var controller = spy(new FizzBuzzController(repository, tokenMap, rest));
-//
-//        doNothing().when(controller).checkAuthorized(any());
-//        try (final var mocked = Mockito.mockStatic(FizzBuzz.class)) { // Prepare to change source code
-//            mocked.when(() -> FizzBuzz.play(99)).thenReturn(expected); // change source code
-////            when(tokenMap.containsKey(token)).thenReturn(true);
-//            assertEquals(expected, controller.fizzbuzz(token, 99));
-//        }
-//    }
+
 }
