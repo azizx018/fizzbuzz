@@ -12,9 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IPTest {
     @Test
-    void itShouldReturnAnIP() {
-        IP ip = new IP("1.2.3.4");
-//        assertEquals("1.2.3.4", ip.getIp());
+    void itShouldReturnAnIP() throws JsonProcessingException {
+        final String ip = "1.2.3.4";
+        IP expected = new IP("1.2.3.4");
+        IP actual = new ObjectMapper().readValue("{\"ip\":\"" + ip + "\"}", IP.class);
+       assertEquals(expected, actual);
     }
 
     @Test
