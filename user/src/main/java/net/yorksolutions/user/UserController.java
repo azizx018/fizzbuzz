@@ -16,7 +16,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/")
 public class UserController {
-    private final UserAccountRepository repository;
+
+
+    private UserAccountRepository repository;
 
     private HashMap<UUID, Long> tokenMap;
 
@@ -73,5 +75,8 @@ public class UserController {
     }
     public void setTokenMap(HashMap<UUID, Long> tokenMap) {
         this.tokenMap = tokenMap;
+    }
+    public void setRepository(UserAccountRepository repository) {
+        this.repository = repository;
     }
 }
